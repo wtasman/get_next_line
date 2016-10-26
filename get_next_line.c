@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libft.h                                            :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wasman <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/21 09:25:16 by wasman            #+#    #+#             */
-/*   Updated: 2016/10/21 17:49:27 by wasman           ###   ########.fr       */
+/*   Created: 2016/10/26 10:34:44 by wasman            #+#    #+#             */
+/*   Updated: 2016/10/26 10:51:29 by wasman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 32
+#include "libft.h"
+#include "get_next_line.h"
 
-int	get_next_line(int const fd, char **line);
+int		get_next_line(const int fd, char **line)
+{
 
-#endif
+}
