@@ -6,41 +6,46 @@
 /*   By: wasman <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 17:29:35 by wasman            #+#    #+#             */
-/*   Updated: 2016/11/09 16:31:06 by wasman           ###   ########.fr       */
+/*   Updated: 2016/10/26 10:34:08 by wasman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "libft.h"
 
-char	*read_in(int fd)
+int	main (int argc, char **argv)
 {
-	char	buff[BUFF_SIZE + 1];
-	int		len;
-
-	buff = memset(buff, 0, BUFF_SIZE);
-	len = read(fd, buff, BUFF_SIZE);
-	if (len <= 0)
-		return (0);
-	buff[BUFF_SIZE] = '\0';
-	return (buff);
-}
-
-
-int	get_next_line(const int fd, char **line)
-{
-	static char	*new_line;
-	char		buff[BUFF_SIZE];
-	int			len;
-	int			i;
-
-	i = 0;
-	if (!(new_line = strnew(BUFF_SIZE)))
-		return (0);
-	if (!(buff = read_in(fd)))
-		return (0);
-	while ((buff[i] != '\n') || (buff[i] != '\0'))
+	char	line[BUFF_SIZE];
+	int		fd;
+	if (argc == 2)
 	{
-		new_line[i] = buff[i];
-		i++;
+		fd = open(argv[1], ORD_ONLY)
+		get_next_line(fd, *line);
+		ft_putstr(line);
 	}
+	return (0);
 }
+
+/*int get_next_line(int fd, char **line)
+{
+	int	i;
+	int	size;
+	char	buff[BUFF_SIZE];
+	int	len;
+	
+	i = 0;
+	size = 0;
+	if (fd = open(*line, O_RDONLY) == -1)
+		return (-1);
+	while (*buff != '\n')
+	{
+		if ((len = read(fd, buff, BUFF_SIZE)) != -1)
+		{
+			if (len == 0)
+				return (0);
+		}
+		return (-1);
+	}
+	return (len);
+	close(fd);
+}*/
