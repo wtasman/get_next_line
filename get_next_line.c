@@ -6,7 +6,7 @@
 /*   By: wasman <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 17:29:35 by wasman            #+#    #+#             */
-/*   Updated: 2016/11/09 16:31:06 by wasman           ###   ########.fr       */
+/*   Updated: 2016/11/10 16:58:45 by wasman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ int	get_next_line(const int fd, char **line)
 	int			i;
 
 	i = 0;
+	if (!line || fd <= 0)
+		return (-1);
 	if (!(new_line = strnew(BUFF_SIZE)))
-		return (0);
+		return (-1);
 	if (!(buff = read_in(fd)))
 		return (0);
 	while ((buff[i] != '\n') || (buff[i] != '\0'))

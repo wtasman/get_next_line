@@ -6,11 +6,7 @@
 /*   By: wasman <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/27 10:19:23 by wasman            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2016/09/28 18:09:50 by wasman           ###   ########.fr       */
-=======
-/*   Updated: 2016/10/10 08:54:58 by wasman           ###   ########.fr       */
->>>>>>> 4d646f5833219314aaf04df7f2a0e9c6a1de6154
+/*   Updated: 2016/11/10 13:13:31 by wasman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +19,7 @@ void	ft_bzero(void *s, size_t n)
 
 	ns = (unsigned char *)s;
 	i = 0;
-	if (n = 0)
+	if (n == 0)
 		return ;
 	while (i < n)
 	{
