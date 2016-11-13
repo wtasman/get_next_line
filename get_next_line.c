@@ -6,7 +6,7 @@
 /*   By: wasman <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 17:29:35 by wasman            #+#    #+#             */
-/*   Updated: 2016/11/12 09:56:45 by wasman           ###   ########.fr       */
+/*   Updated: 2016/11/12 18:14:28 by wasman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,36 +26,32 @@ int		find_n(char *str, int c)
 	return (0);
 }
 
-char	*read_in(int fd)
+char	*read_in(int fd, char **buff)
 {
-	char	buff[BUFF_SIZE + 1];
+	char	read_buff[BUFF_SIZE + 1];
 	int		len;
 
-	buff = memset(buff, 0, BUFF_SIZE);
-	len = read(fd, buff, BUFF_SIZE);
-	if (len <= 0)
-		return (NULL);
-	buff[BUFF_SIZE] = '\0';
-	return (buff);
+	if ((len = read(fd, read_buff, BUFF_SIZE)) > 0)
+	{
+		read_buff[len] = '\0';
+		if (!buff)
+			*buff = ft_strdup(read_buff);
+		else
+			*buff = ft_strjoin(*buff, read_buff);
+		return (len);
+	}
+	return (len);
 }
 
 int	get_next_line(const int fd, char **line)
 {
-	static char	*new_line;
-	char		buff[BUFF_SIZE];
+	static char	*buff;
 	int			len;
-	int			i;
 
-	i = 0;
+	len = 0;
 	if (!line || fd <= 0)
 		return (-1);
-	if (!(new_line = strnew(BUFF_SIZE)))
-		return (-1);
-	if (!(buff = read_in(fd)))
-		return (0);
-	while ((buff[i] != '\n') || (buff[i] != '\0'))
-	{
-		new_line[i] = buff[i];
-		i++;
-	}
+	*line = NULL;
+	if ((len = read_in(fd, &buff)) < 0)
+		return (len);
 }
