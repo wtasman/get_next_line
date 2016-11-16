@@ -6,21 +6,23 @@
 /*   By: wasman <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 17:29:35 by wasman            #+#    #+#             */
-/*   Updated: 2016/11/09 14:03:59 by wasman           ###   ########.fr       */
+/*   Updated: 2016/11/13 14:07:10 by wasman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h>
 #include "get_next_line.h"
-#include "libft.h"
 
 int	main (int argc, char **argv)
 {
-	char	line[BUFF_SIZE];
+	char	*line;
 	int		fd;
+
+	line = ft_strnew(BUFF_SIZE);
 	if (argc == 2)
 	{
-		fd = open(argv[1], ORD_ONLY)
-		get_next_line(fd, *line);
+		fd = open(argv[1], O_RDONLY);
+		get_next_line(fd, &(*line));
 		ft_putstr(line);
 	}
 	return (0);
