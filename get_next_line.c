@@ -6,7 +6,7 @@
 /*   By: wasman <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/19 17:29:35 by wasman            #+#    #+#             */
-/*   Updated: 2016/11/16 18:10:00 by wasman           ###   ########.fr       */
+/*   Updated: 2016/11/16 19:25:58 by wasman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ int	get_next_line(const int fd, char **line)
 		return (-1);
 	if (!(buff = (char *)malloc(sizeof(char))))
 		return (-1);
-	n = find_n(buff, '\n');
+	n = -1;
 	while (n == -1)
 	{
 		len = read_in(fd, &buff);
 		if (n == -1 && find_n(buff, '\0') > 0)
 		{
-			*line = ft_strsub(buff, 0, n - 1);
+			*line = ft_strsub(buff, 0, n);
 			return (0);
 		}	   
 		else if (len < 0)
@@ -75,18 +75,15 @@ int	get_next_line(const int fd, char **line)
 		else
 			n = find_n(buff, '\n');
 	}
-	*line = ft_strsub(buff, 0, n - 1);
+	*line = ft_strsub(buff, 0, n);
 	if (!line)
 		return (-1);
-	ft_putstr(*line);
-	ft_putchar('\n');
 	free(buff);
 	buff = ft_strsub(*line, n, (ft_strlen(*line) - n));
-	ft_putstr(buff);
-	ft_putchar('\n');
 	return (1);
 }
 
+/*
 int	main(int argc, char **argv)
 {
 	int fd;
@@ -97,6 +94,7 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 		fd = open(argv[1], O_RDONLY);
 	while(res <= 0)
-		res = get_next_line(fd, &line); 
+		res = get_next_line(fd, &line);
+	ft_putstr(line);
 	return(0);
-}
+}*/
