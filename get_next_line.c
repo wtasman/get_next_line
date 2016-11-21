@@ -5,96 +5,70 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wasman <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/19 17:29:35 by wasman            #+#    #+#             */
-/*   Updated: 2016/11/16 19:25:58 by wasman           ###   ########.fr       */
+/*   Created: 2016/11/21 00:18:13 by wasman            #+#    #+#             */
+/*   Updated: 2016/11/21 00:34:48 by wasman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	find_n(char *str, int c)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-int	read_in(int fd, char **buff)
+int		read_in(int const fd, char **buff)
 {
 	char	read_buff[BUFF_SIZE + 1];
-	int		len;
 	char	*str;
+	int		len;
 
-	len = read(fd, read_buff, BUFF_SIZE);
-	if (len > 0)
+	str = NULL;
+	len = -2;
+	while ((!ft_strchr(*buff, '\n')))
 	{
-		read_buff[len] = '\0';
-		if (!(*buff))
-		{
-			*buff = read_buff;
+		if ((len = read(fd, read_buff, BUFF_SIZE)) <= 0)
 			return (len);
-		}
-		str = ft_strjoin(*buff, read_buff);
-		if (!str)
+		str = *buff;
+		read_buff[len] = '\0';
+		if (!(*buff = ft_strjoin(*buff, read_buff)))
 			return (-1);
-		free(*buff);
-		*buff = str;
+		ft_strdel(&str);
+		if (len < BUFF_SIZE)
+			return (len);
 	}
 	return (len);
 }
 
-int	get_next_line(const int fd, char **line)
+char	*make(char *buff, char **line)
 {
-	static char	*buff;
-	int			len;
-	int			n;
+	char	*tmp;
+	char	*free;
 
-	len = 0;
-	if (!line || fd <= 0)
-		return (-1);
-	if (!(buff = (char *)malloc(sizeof(char))))
-		return (-1);
-	n = -1;
-	while (n == -1)
+	free = buff;
+	if (buff && (tmp = ft_strchr(buff, '\n')))
 	{
-		len = read_in(fd, &buff);
-		if (n == -1 && find_n(buff, '\0') > 0)
-		{
-			*line = ft_strsub(buff, 0, n);
-			return (0);
-		}	   
-		else if (len < 0)
-			return (-1);
-		else
-			n = find_n(buff, '\n');
+		*line = ft_strsub(buff, 0, ft_strlen(buff) - ft_strlen(tmp));
+		buff = ft_strdup(tmp + 1);
+		ft_strdel(&free);
 	}
-	*line = ft_strsub(buff, 0, n);
-	if (!line)
-		return (-1);
-	free(buff);
-	buff = ft_strsub(*line, n, (ft_strlen(*line) - n));
-	return (1);
+	else
+	{
+		*line = ft_strdup(buff);
+		ft_strclr(buff);
+	}
+	return (buff);
 }
 
-/*
-int	main(int argc, char **argv)
+int		get_next_line(const int fd, char **line)
 {
-	int fd;
-	int	res;
-	char	*line;
+	static char	*buff = NULL;
+	int			ret;
 
-	res = 0;
-	if (argc == 2)
-		fd = open(argv[1], O_RDONLY);
-	while(res <= 0)
-		res = get_next_line(fd, &line);
-	ft_putstr(line);
-	return(0);
-}*/
+	if (!line)
+		return (-1);
+	if (!buff)
+		buff = ft_strnew(0);
+	if ((ret = read_in(fd, &buff)) == -1)
+		return (-1);
+	buff = make(buff, line);
+	if ((!ret && !ft_strlen(buff) && !ft_strlen(*line)))
+		return (0);
+	else
+		return (1);
+}
