@@ -6,7 +6,7 @@
 /*   By: wasman <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/21 00:18:13 by wasman            #+#    #+#             */
-/*   Updated: 2016/11/21 00:34:48 by wasman           ###   ########.fr       */
+/*   Updated: 2016/11/21 00:40:36 by wasman           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int		read_in(int const fd, char **buff)
 	int		len;
 
 	str = NULL;
-	len = -2;
 	while ((!ft_strchr(*buff, '\n')))
 	{
 		if ((len = read(fd, read_buff, BUFF_SIZE)) <= 0)
